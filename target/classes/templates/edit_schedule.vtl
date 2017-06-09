@@ -1,0 +1,252 @@
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css"/>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+<br><br><br><br><br>
+<section>
+<div class="container">
+<div class="row">
+    <div class="form-group col-6 col-sm-2" style="width:20%">
+        <label class="control-label" for="date">Date</label>
+
+        <div class="input-group date-picker">
+            <input id="date" type="text" class="form-control datepicker" value="" placeholder="DD-MM-YYYY" type="text" readonly="readonly" required>
+        <div class="input-group-addon">
+            <span class="glyphicon glyphicon-th"></span>
+        </div>
+        </div>
+        </div>
+    <div class="form-group col-6 col-sm-2" style="width:20%">
+        <label class="control-label" for="startTime">Kick-off Time</label>
+
+        <div class="input-group clockpicker">
+            <input id="startTime" type="text" class="form-control" value="now" readonly="readonly" required>
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-time"></span>
+                    </span>
+        </div>
+    </div>
+    <div class="form-group col-6 col-sm-2"  style="width: 20%">
+        <label class="control-label" for="select1">Team</label>
+
+        <select class="form-control col-6 col-sm-2" id="select1" required>
+            <option value="" selected="selected">Select team</option>
+            #foreach($team in $teams)
+                <option value=$team.getName()>$team.getName()</option>
+            #end
+        </select>
+    </div>
+    <div class="col-6 col-sm-2"  style="width: 6%">
+        <h1 style="font-family: georgia;font-weight:900">VS</h1>
+    </div>
+    <div class="form-group col-6 col-sm-2"  style="width: 20%">
+        <label class="control-label" for="select2">Team</label>
+
+        <select class="form-control col-6 col-sm-2" id="select2" required>
+            <option value="" selected="selected">Select team</option>
+            #foreach($team in $teams)
+                <option value=$team.getName()>$team.getName()</option>
+            #end
+        </select>
+    </div>
+    <div class="form-group col-6 col-sm-2"  style="width: 20%">
+        <label class="control-label" for="field">Field</label>
+
+        <select class="form-control col-6 col-sm-2" id="field" required>
+            <option value="" selected="selected">Select a field</option>
+            <option value="field1">field1</option>
+            <option value="field2">field2</option>
+            <option value="field3">field3</option>
+            <option value="field4">field4</option>
+            <option value="field5">field5</option>
+        </select>
+    </div>
+    </div>
+    <button type="button" class="btn btn-info btn-lg addToSchedule" data-toggle="modal" data-target="#myModal">add to schedule</button>
+    <button style="margin-left: 10%" type="button" class="btn btn-info btn-lg deleteFromSchedule" >Delete from schedule</button>
+    <a  href="addScores" style="margin-left: 10%" type="button" class="btn btn-info btn-lg addScores" >Add scores</a>
+</div>
+    <br><br>
+    <h1 style="font-family: georgia; font-weight: 900">GAME SCHEDULE</h1>
+    <table id="schedule" class="table">
+        <thead>
+        <tr>
+            <th class="col-md-1">DATE</th>
+            <th class="col-md-1" >TIME</th>
+            <th class="col-md-1" >TEAM1</th>
+            <th class="col-md-1" >SCORE</th>
+            <th class="col-md-1">TEAM2</th>
+            <th class="col-md-1">FIELD</th>
+
+        </tr>
+        #foreach($game in $games)
+        <tr>
+                <td>
+                    $game.getDate()
+                </td>
+                <td>
+                    $game.getTime()
+                </td>
+                <td>
+                    $game.getTeam1().getName()
+                </td>
+                <td>
+                    $game.getScore()
+                </td>
+                <td>
+                    $game.getTeam2().getName()
+                </td>
+                <td>
+                    $game.getField()
+                    <span class="pull-right removeGame hidden" data-effect="remove" value=$game.getID() ><i style="color: red" class="glyphicon glyphicon-remove"></i></span>
+
+                </td>
+
+
+        </tr>
+        #end
+        </thead>
+    </table>
+</section>
+
+<script>
+var date;
+var time;
+var team1;
+var team2;
+    $('.addToSchedule').on('click',function(){
+        date = document.getElementById('date').value;
+        date = date.replace('/','%20').replace('/','%20');
+        console.log(document.getElementById('date').value)
+        time = document.getElementById('startTime').value
+        console.log(document.getElementById('startTime').value)
+        var e = document.getElementById("select1");
+        team1 = e.options[e.selectedIndex].text;
+        console.log(e.options[e.selectedIndex].text);
+        var e2 = document.getElementById("select2");
+        team2 = e2.options[e2.selectedIndex].text;
+        console.log(e2.options[e2.selectedIndex].text);
+        var e3 = document.getElementById("field");
+        field = e3.options[e3.selectedIndex].text;
+        console.log(e3.options[e3.selectedIndex].text);
+        if(date != "dd/mm/yyyy" && time != "now" && team1 != "Select team"
+                && team2 != "Select team" && field != "Select a field"){
+        var conf = confirm("Are You sure you want to add this game to the schedule?");
+        if (conf == true) {
+        $(function(){
+            $.ajax({
+                type: 'GET',
+                contentType: "application/json; charset=utf-8",
+                url: "http://localhost:4567/updateSchedule/"+date+"/"+time+"/"+team1.replace(' ','%20')+"/"+team2.replace(' ','%20')+"/"+field,
+                async: false,
+                success: function () {
+//                    alert("New game has been added");
+                    $('#date').val("dd-MM-yyyy");
+                    $('#startTime').val("12:00");
+                    $('select').prop('selectedIndex', 0);
+                    $('#field').prop('selectedIndex', 0);
+                    location.reload();
+                },
+                error: function () {
+                    console.log('there is some error');
+                }
+            });
+
+        });
+    }}else{
+            alert("One or more fields missing!!")
+        }});
+
+var clickCount = 1;
+$(function(){
+$('.removeGame').on('click',function() {
+    var conf = confirm("Are You sure you want to delete this Game?");
+    if (conf == true) {
+        var effect = $(this).data('effect');
+        $(this).closest('.tobeRemoved')[effect]();
+
+        var gameID = $(this).attr("value");
+        $.ajax({
+            type: 'DELETE',
+            contentType: "application/json; charset=utf-8",
+            url: "http://localhost:4567/removeGame/" + gameID,
+            async: false,
+            success: function () {
+                $(".deleteFromSchedule").html('Delete Game');
+                $(".removeGame").addClass("hidden");
+                clickCount = 1;
+                location.reload();
+            },
+            error: function () {
+                console.log('there is some error');
+            }
+        });
+    }
+})
+});
+$(function(){
+    $('.deleteFromSchedule').on('click',function(){
+        clickCount = clickCount + 1;
+        if(clickCount % 2 == 0) {
+            $(".deleteFromSchedule").html('Cancel Delete');
+            $(".removeGame").removeClass('hidden');
+//                $(".showRemove").html('Cancel Delete');
+        }else {
+            $(".deleteFromSchedule").html('Delete Game');
+            $(".removeGame").addClass("hidden");
+        }
+    })
+});
+</script>
+##<script>
+##    var date_input;
+##    $(document).ready(function() {
+##
+##        date_input = $('input[name="date"]');
+##        var options = {
+##            format: 'yyyy-mm-dd',
+##            todayHighlight: true,
+##            autoclose: true,
+##            clearBtn: true,
+##            orientation: 'auto top'
+##        };
+##        // date_input.datepicker(options);
+##        date_input.datepicker(options).on('changeDate', function(event) {
+##            console.log('date changed')
+##        });
+##    });
+##
+##</script>
+
+<script type="text/javascript" src="jquery-clockpicker.min.js"></script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-timepicker/0.5.2/js/bootstrap-timepicker.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.13/moment-timezone.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.13/moment-timezone-with-data-2012-2022.min.js"></script>
+<script>
+    $('.datepicker').datepicker({
+        format: 'mm/dd/yyyy',
+//        format: 'yyyy/dd/mm',
+        startDate: '-3d',
+        todayHighlight: true,
+        autoclose: true,
+        clearBtn: true,
+        orientation:'top',
+
+    });
+</script>
+<script>
+    $('.clockpicker').clockpicker({
+        autoclose: true,
+        'default': 'now',
+
+
+        donetext: 'Done',
+        twelvehour: true,
+        leadingZeroHours: false,
+        upperCaseAmPm: true,
+        leadingSpaceAmPm: true,
+    });
+</script>
+

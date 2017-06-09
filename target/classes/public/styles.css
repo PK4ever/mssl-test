@@ -1,0 +1,34 @@
+@media (max-width: 767px) {
+    .upcomingGames{
+        margin-left: 40% !important;
+        display: inline-block !important;
+    }
+    .upcomingGames2{
+        font-size: 30px !important;
+        margin-left: -70% !important;
+
+    }
+    .vs{
+        font-size: 50px !important;
+        margin-left: -40% !important;
+        margin-bottom: -35% !important;
+
+    }
+    .setmargin1{
+        margin-bottom: -35% !important;
+        margin-left: -150% !important;
+    }
+    .setmargin2{
+        margin-bottom: -35% !important;
+        margin-left: 30% !important;
+    }
+
+}
+
+
+@media (max-width: 414px) {
+
+}
+.navbar-right{
+    margin-right: 20px !important;
+}

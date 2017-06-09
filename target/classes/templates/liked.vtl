@@ -1,0 +1,14 @@
+<Ol>
+    #foreach ($event in $modals)
+        <form action='/remove'>
+            <input type="hidden" name="seid" value="$event.seid"/>
+            <li><b>Event: $event.getTitle() <br> <b>Venue</b>: $event.getVenue()</li>
+            <input class="btn" type="submit" value="delete"/>
+            <br><br>
+        </form>
+    #end
+</Ol>
+<form action="/" method="GET">
+    <input type="submit" value="Back to home page"/>
+    <br><br>
+</form>

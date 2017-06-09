@@ -1,0 +1,19 @@
+##<ol>
+###foreach ($event in $EventsList)
+##    <li><b>Event: $event.title <br> <b>Venue</b>: $event.venueAddress</li>
+###end
+##</ol>
+
+
+<Ol>
+    #foreach ($event in $EventsList)
+    <form action='/liked' method="post">
+        <input type="hidden" name="title" value="$event.title"/>
+        <input type="hidden" name="venue" value="$event.venueAddress"/>
+        <input type="hidden" name="seid" value="$event.seid"/>
+        <li><b>Event: $event.title <br> <b>Venue</b>: $event.venueAddress</li>
+        <input class="btn" type="submit" value="like"/>
+        <br><br>
+    </form>
+    #end
+</Ol>
