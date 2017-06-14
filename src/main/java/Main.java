@@ -37,7 +37,7 @@ public class Main {
 //        String databaseUrl = "jdbc:postgresql://localhost:5432/mssl?characterEncoding=UTF-8&useSSL=false";
 
 
-        String databaseUrl = "jdbc:mysql://manliussumm_8345:JpbYSaGBWdLsmwJUTyHp@manliussumm-8345.mysql.dbs.appsdeck.eu:31318/manliussumm_8345";
+        String databaseUrl = "jdbc:mysql://manliussumm_8345/manliussumm_8345";
 
 
 
