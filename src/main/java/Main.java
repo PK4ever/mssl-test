@@ -36,15 +36,15 @@ public class Main {
 //        String databaseUrl = "jdbc:mysql://localhost/mssl?characterEncoding=UTF-8&useSSL=false";
 //        String databaseUrl = "jdbc:postgresql://localhost:5432/mssl?characterEncoding=UTF-8&useSSL=false";
 
-//        String databaseUrl = "jdbc:mysql://manliussumm_8345";
-        String databaseUrl = "jdbc:mysql://manliussumm_8345:31318";
+
+        String databaseUrl = "jdbc:mysql://manliussumm_8345:JpbYSaGBWdLsmwJUTyHp@manliussumm-8345.mysql.dbs.appsdeck.eu:31318/manliussumm_8345";
 
 
 
         ConnectionSource connectionSource = new JdbcConnectionSource(databaseUrl);
 //        ((JdbcConnectionSource) connectionSource).setUsername("postgres");
-        ((JdbcConnectionSource) connectionSource).setUsername("root");
-        ((JdbcConnectionSource) connectionSource).setPassword("mdbh6548");
+//        ((JdbcConnectionSource) connectionSource).setUsername("root");
+//        ((JdbcConnectionSource) connectionSource).setPassword("mdbh6548");
         Dao<UserModal, String> userModalStringDao = DaoManager.createDao(connectionSource, UserModal.class);
 
         UserModal userModal = new UserModal();
