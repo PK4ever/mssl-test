@@ -9,7 +9,6 @@ import java.sql.SQLException;
 public class UserAuth {
 
     public void createIfNotExists(UserModal modal, Dao userDao) throws SQLException {
-
         userDao.createIfNotExists(modal);
     }
     public boolean validateUser(Request request, Dao userDao) throws SQLException {

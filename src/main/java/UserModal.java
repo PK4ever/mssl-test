@@ -4,7 +4,7 @@ import com.j256.ormlite.table.DatabaseTable;
 /**
  * Created by paulk4ever on 5/19/17.
  */
-@DatabaseTable(tableName = "adminUser")
+@DatabaseTable(tableName = "manliussumm_8345.adminUser")
 public class UserModal {
 
     public static final String USERNAME_FIELD = "userName";
