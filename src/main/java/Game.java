@@ -4,7 +4,7 @@ import com.j256.ormlite.table.DatabaseTable;
 /**
  * Created by paulk4ever on 5/27/17.
  */
-@DatabaseTable(tableName = "manliussumm_8345.games")
+@DatabaseTable(tableName = "games")
 public class Game {
     Game(){
 
