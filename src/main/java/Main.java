@@ -28,13 +28,17 @@ public class Main {
         String page = "templates/menubar.vtl";
 
         String mysqlUrl = System.getenv("SCALINGO_MYSQL_URL");
-        String databaseUrl = "jdbc:"+mysqlUrl;
+//        String databaseUrl = "jdbc:"+mysqlUrl;
 //        connectionSource = new JdbcConnectionSource("jdbc:"+mysqlUrl)
 //        String databaseUrl = "jdbc:mysql://localhost:3306/mssl?characterEncoding=UTF-8&useSSL=false";
 //        String databaseUrl = "jdbc:mysql://manliussumm_8345:JpbYSaGBWdLsmwJUTyHp@manliussumm-8345.mysql.dbs.appsdeck.eu:31318/manliussumm_8345";
 //        String databaseUrl = "jdbc:mysql://"+getHerokuAssignedPort()+"/mssl?characterEncoding=UTF-8&useSSL=false";
 //        String databaseUrl = "jdbc:mysql://localhost/mssl?characterEncoding=UTF-8&useSSL=false";
 //        String databaseUrl = "jdbc:postgresql://localhost:5432/mssl?characterEncoding=UTF-8&useSSL=false";
+
+//        String databaseUrl = "jdbc:mysql://manliussumm_8345";
+        String databaseUrl = "jdbc:mysql://manliussumm_8345";
+
 
 
         ConnectionSource connectionSource = new JdbcConnectionSource(databaseUrl);
